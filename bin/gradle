@@ -4,6 +4,7 @@ gradle="docker run --rm \
                    --tty \
                    --net "host" \
                    -v "${PWD}:/data" \
+                   -v "${HOME}/.docker-java.properties:/data/.docker-java.properties" \
                    -v /var/run/docker.sock:/var/run/docker.sock \
                    -it aahunter/gradle:3.1"
 

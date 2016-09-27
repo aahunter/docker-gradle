@@ -1,4 +1,5 @@
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 
 buildscript {
     repositories {
@@ -24,9 +25,17 @@ docker {
 
 version = '3.1'
 def sha = 'c7de3442432253525902f7e8d7eac8b5fd6ce1623f96d76916af6d0e383010fc'
+def repo = 'aahunter'
+def image = 'gradle'
 
 task buildImage(type: DockerBuildImage) {
     inputDir = file('.')
-    tag = 'aahunter/gradle:' + version
+    tag = repo + '/' + image + ':' + version
     buildArgs = ['ARG_GRADLE_VERSION':version, 'ARG_GRADLE_SHA':sha]
+}
+
+task pushImage(type: DockerPushImage) {
+    dependsOn buildImage
+    imageName = repo + '/' + image
+    tag = version
 }
