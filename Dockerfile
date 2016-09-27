@@ -30,7 +30,6 @@ VOLUME ["/data"]
 
 USER gradle
 WORKDIR /data
-EXPOSE 2375
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["gradle", "-version"]
