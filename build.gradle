@@ -1,0 +1,32 @@
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+
+buildscript {
+    repositories {
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-docker-plugin:3.0.3'
+    }
+                    
+}
+
+apply plugin: 'com.bmuschko.docker-remote-api'
+
+repositories {
+    mavenCentral()
+}
+
+docker {
+    url = System.env.DOCKER_HOST ?: 'tcp://127.0.0.1:2375'
+}
+
+version = '3.1'
+def sha = 'c7de3442432253525902f7e8d7eac8b5fd6ce1623f96d76916af6d0e383010fc'
+
+task buildImage(type: DockerBuildImage) {
+    inputDir = file('.')
+    tag = 'aahunter/gradle:' + version
+    buildArgs = ['ARG_GRADLE_VERSION':version, 'ARG_GRADLE_SHA':sha]
+}
