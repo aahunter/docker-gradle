@@ -1,0 +1,10 @@
+#!/bin/bash
+gradle="docker run --rm \
+                   --interactive \
+                   --tty \
+                   --net "host" \
+                   -v "${PWD}:/data" \
+                   -v /var/run/docker.sock:/var/run/docker.sock \
+                   -it aahunter/gradle:3.1"
+
+exec $gradle $*
